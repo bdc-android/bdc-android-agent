@@ -1,0 +1,10 @@
+<resources>
+    <!--hook的view的tag:用于不要重复hook-->
+    <item name="behavior_tag_onclick" type="id"></item>
+    <item name="behavior_tag_onlongclick" type="id"></item>
+
+    <item name="behavior_tag_onItemClick" type="id"></item>
+    <item name="behavior_tag_onItemLong" type="id"></item>
+    <item name="behavior_tag_onitemSelected" type="id"></item>
+
+</resources>

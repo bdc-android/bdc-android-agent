@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="proguard-behaviorsdk">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/behaviorsdk/libs/proguard-behaviorsdk.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

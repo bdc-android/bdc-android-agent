@@ -1,0 +1,2 @@
+include ':behaviorsdk'
+include ':demoapp'
