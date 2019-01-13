@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">QuickTV</string>
+
+
+    <string-array name="adBlockDiv">
+        <item>clearfix</item>
+        <item>clearfix header</item>
+    </string-array>
+</resources>
