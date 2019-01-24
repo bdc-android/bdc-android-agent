@@ -109,7 +109,7 @@ public class CataloguePresenter extends CatalogueContract.Presenter {
         }else if (mType == 1){
             OkHttpClient okHttpClient = new OkHttpClient();
             final Request request = new Request.Builder()
-                    .url("http://www.2l3371.cn/mobile/live/index")
+                    .url(MyApplication.getInstance().getHostUrl3() + "mobile/live/index")
                     .post(RequestBody.create(null, ""))//默认就是GET请求，可以不写
                     .build();
             Call call = okHttpClient.newCall(request);

@@ -50,7 +50,7 @@ class CardRecordHolder extends BaseViewHolder<VideoModel> {
                     .bitmapTransform(new RoundedCornersTransformation(mContext, ScreenUtil.dp2px(mContext, 4), 0))
                     .into(image);
             name.setText(videoModel.getBt());
-        }else if (mType == 3){
+        }else if (mType == 3 || mType == 6){
             Glide.with(mContext)
                     .load(videoModel.getImage())
                     .bitmapTransform(new RoundedCornersTransformation(mContext, ScreenUtil.dp2px(mContext, 4), 0))
@@ -64,8 +64,10 @@ class CardRecordHolder extends BaseViewHolder<VideoModel> {
                 Intent intent;
                 if (MyApplication.getInstance().getMode() == 0){
                     intent = new Intent(mContext, PlayActivity.class);
-                }else {
+                }else if (MyApplication.getInstance().getMode() == 1){
                     intent = new Intent(mContext, PlayerActivity.class);
+                }else {
+                    intent = new Intent(mContext, VideoWebViewActivity.class);
                 }
                 if (mType == 1){
                     intent.putExtra("url", videoModel.getAddress());
@@ -74,9 +76,13 @@ class CardRecordHolder extends BaseViewHolder<VideoModel> {
                     intent.putExtra("url", videoModel.getDz());
                     intent.putExtra("title", videoModel.getBt());
                 }else if (mType == 3){
-                    intent = new Intent(mContext, VideoWebViewActivity.class);
+                    //intent = new Intent(mContext, VideoWebViewActivity.class);
                     intent.putExtra("url", videoModel.getLink());
                     intent.putExtra("title", videoModel.getBt());
+                }else if (mType == 6){
+                    //intent = new Intent(mContext, VideoWebViewActivity.class);
+                    intent.putExtra("url", videoModel.getLink());
+                    intent.putExtra("title", videoModel.getTitle());
                 }
 
                 mContext.startActivity(intent);
@@ -91,7 +97,7 @@ class CardRecordHolder extends BaseViewHolder<VideoModel> {
                     cm.setText(videoModel.getAddress());
                 } else if (mType == 2){
                     cm.setText(videoModel.getDz());
-                } else if (mType == 3){
+                } else if (mType == 3 || mType == 6){
                     cm.setText(videoModel.getLink());
                 }
                 Toast.makeText(mContext,"复制成功",Toast.LENGTH_SHORT).show();

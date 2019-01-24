@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.flyco.tablayout.SlidingTabLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,13 +63,14 @@ public class MainActivity extends BaseTActivity {
         mViewPager.setAdapter(mAdapter);
         mSlidingTabLayout.setViewPager(mViewPager, mTitles);
 
-        login();
+
         //getList();
         //signUp();
-        getUrl();
+        getUrl1();
+        getUrl2();
     }
 
-    private void getUrl() {
+    private void getUrl1() {
         OkHttpClient okHttpClient  = new OkHttpClient();
         final Request request = new Request.Builder()
                 .url("http://vip.714an.cn/login/login/zhibjk.html")
@@ -87,15 +89,18 @@ public class MainActivity extends BaseTActivity {
                 Log.d(TAG, "onResponse: " + result);
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONObject msg = jsonObject.getJSONObject("msg");
-                    String pingtai = msg.getString("pingtai");
-                    String zhubo = msg.getString("zhubo");
-                    if (!TextUtils.isEmpty(pingtai)){
-                        MyApplication.getInstance().setHostUrl1(pingtai);
+                    JSONArray msg = jsonObject.getJSONArray("msg");
+                    if (msg.length()>0){
+                        String pingtai = msg.getJSONObject(0).getString("pingtai");
+                        String zhubo = msg.getJSONObject(0).getString("zhubo");
+                        if (!TextUtils.isEmpty(pingtai)){
+                            MyApplication.getInstance().setHostUrl1(pingtai);
+                        }
+                        if (!TextUtils.isEmpty(zhubo)){
+                            MyApplication.getInstance().setHostUrl2(zhubo);
+                        }
                     }
-                    if (!TextUtils.isEmpty(zhubo)){
-                        MyApplication.getInstance().setHostUrl2(zhubo);
-                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -103,6 +108,51 @@ public class MainActivity extends BaseTActivity {
         });
 
     }
+
+    private void getUrl2() {
+        OkHttpClient okHttpClient  = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url("http://www.df69e.cn/mobile/index/server_domains")
+                .get()//默认就是GET请求，可以不写
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                Log.d(TAG, "onResponse: " + result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject msg = jsonObject.getJSONObject("data");
+                    String domains = msg.getString("domains");
+
+                    if (!TextUtils.isEmpty(domains)){
+
+                        if(domains.indexOf(";") != -1){
+                            String domain1 = domains.substring(0, domains.indexOf(";"));
+                            String domain2 = domains.substring(domains.indexOf(";") + 1);
+                            Log.d(TAG, domain1 + " --- " + domain2);
+                            if (!TextUtils.isEmpty(domain2)){
+                                MyApplication.getInstance().setHostUrl3(domain2);
+                                login();
+                            }
+                        }
+                        //MyApplication.getInstance().setHostUrl1(pingtai);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
 
     private void getList() {
         OkHttpClient okHttpClient  = new OkHttpClient();
@@ -149,7 +199,7 @@ public class MainActivity extends BaseTActivity {
         }
         OkHttpClient okHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                .url("http://www.2l3371.cn/mobile/user/login")
+                .url(MyApplication.getInstance().getHostUrl3() + "mobile/user/login")
                 .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString()))//默认就是GET请求，可以不写
                 .build();
         Call call = okHttpClient.newCall(request);

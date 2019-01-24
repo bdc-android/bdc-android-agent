@@ -203,9 +203,9 @@ public class PlayListActicity extends BaseTActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String url = "http://www.2l3371.cn/mobile/live/anchors";
+            String url = MyApplication.getInstance().getHostUrl3() + "mobile/live/anchors";
             if (name.equals("热门")){
-                url = "http://www.2l3371.cn/mobile/live/proposed_anchors";
+                url = MyApplication.getInstance().getHostUrl3() + "mobile/live/proposed_anchors";
             }
             final Request request = new Request.Builder()
                     .url(url)

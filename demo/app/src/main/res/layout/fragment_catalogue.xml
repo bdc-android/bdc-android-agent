@@ -133,7 +133,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
-                android:text="注册"
+                android:text="WebView"
                 android:textAllCaps="false" />
 
             <Button

@@ -93,4 +93,27 @@ public class VideoWebViewActivity extends BaseTActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        //暂停WebView在后台的所有活动
+//        mVideoView.onPause();
+//        //暂停WebView在后台的JS活动
+//        mVideoView.pauseTimers();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        mVideoView.onResume();
+//        mVideoView.resumeTimers();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        mVideoView.destroy();
+//        mVideoView = null;
+//    }
 }

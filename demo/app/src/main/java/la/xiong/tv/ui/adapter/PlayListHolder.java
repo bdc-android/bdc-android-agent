@@ -62,8 +62,10 @@ public class PlayListHolder extends BaseViewHolder<CategoryModel> {
                 Intent intent;
                 if (MyApplication.getInstance().getMode() == 0){
                     intent = new Intent(mContext, PlayActivity.class);
-                }else {
+                }else if (MyApplication.getInstance().getMode() == 1){
                     intent = new Intent(mContext, PlayerActivity.class);
+                }else {
+                    intent = new Intent(mContext, VideoWebViewActivity.class);
                 }
                 if (mType == 0){
                     //intent.putExtra("url", categoryModel.getPlay_url());

@@ -197,14 +197,16 @@ public class CatalogueFragment extends BaseTFragment<CataloguePresenter> impleme
             mVideoButtonRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), RegisterActivity.class);
-                    mContext.startActivity(intent);
+                    MyApplication.getInstance().setMode(2);
+                    Toast.makeText(mContext,"设置播放器为WebView",Toast.LENGTH_SHORT).show();
+                    //Intent intent = new Intent(getContext(), RegisterActivity.class);
+                    //mContext.startActivity(intent);
                 }
             });
             mVideoButtonMoon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), PlayListActicity.class);
+                    Intent intent = new Intent(getContext(), VideoCategoryListActivity3.class);
                     intent.putExtra("name", "Moon");
                     intent.putExtra("type", 3);
                     mContext.startActivity(intent);

@@ -67,8 +67,10 @@ public class VideoListAdapter extends CommonAdapter<VideoModel> {
                 Intent intent;
                 if (MyApplication.getInstance().getMode() == 0){
                     intent = new Intent(mContext, PlayActivity.class);
-                }else {
+                }else if (MyApplication.getInstance().getMode() == 1){
                     intent = new Intent(mContext, PlayerActivity.class);
+                }else {
+                    intent = new Intent(mContext, VideoWebViewActivity.class);
                 }
                 if (mType == 1){
                     intent.putExtra("url", videoModel.getAddress());
@@ -77,7 +79,7 @@ public class VideoListAdapter extends CommonAdapter<VideoModel> {
                     intent.putExtra("url", videoModel.getDz());
                     intent.putExtra("title", videoModel.getBt());
                 }else if (mType == 3){
-                    intent = new Intent(mContext, VideoWebViewActivity.class);
+                    //intent = new Intent(mContext, VideoWebViewActivity.class);
                     intent.putExtra("url", videoModel.getLink());
                     intent.putExtra("title", videoModel.getBt());
                 }

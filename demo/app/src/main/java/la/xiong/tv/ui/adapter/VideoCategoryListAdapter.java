@@ -1,10 +1,12 @@
 package la.xiong.tv.ui.adapter;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -71,6 +73,12 @@ public class VideoCategoryListAdapter extends CommonAdapter<VideoType> {
                     .bitmapTransform(new RoundedCornersTransformation(mContext, ScreenUtil.dp2px(mContext, 4), 0))
                     .into(image);
             name.setText(videoType.getTitle());
+        } else if (mType == 6){
+            Glide.with(mContext)
+                    .load("http://thyrsi.com/t6/641/1545745928x2890202707.jpg")
+                    .bitmapTransform(new RoundedCornersTransformation(mContext, ScreenUtil.dp2px(mContext, 4), 0))
+                    .into(image);
+            name.setText(videoType.getTitle());
         }
 
         holder.setOnClickListener(R.id.item_category_image, new View.OnClickListener() {
@@ -87,10 +95,18 @@ public class VideoCategoryListAdapter extends CommonAdapter<VideoType> {
                 }else if (mType == 4){
                     intent = new Intent(mContext, VideoWebViewActivity.class);
                     intent.putExtra("url", videoType.getUrl()+"");
+                    ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setText(videoType.getUrl()+"");
+                    Toast.makeText(mContext,"复制成功",Toast.LENGTH_SHORT).show();
                 }else if (mType == 5){
                     intent = new Intent(mContext, PlayerActivity.class);
                     intent.putExtra("url", videoType.getVideo_url()+"");
                     intent.putExtra("title", videoType.getTitle()+"");
+                    ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setText(videoType.getVideo_url()+"");
+                    Toast.makeText(mContext,"复制成功",Toast.LENGTH_SHORT).show();
+                }else if (mType == 6){
+                    intent.putExtra("id", videoType.getId());
                 }
                 intent.putExtra("type", mType);
                 mContext.startActivity(intent);

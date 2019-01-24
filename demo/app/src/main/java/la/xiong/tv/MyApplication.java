@@ -16,11 +16,21 @@ import la.xiong.tv.injector.module.ApplicationModule;
 public class MyApplication extends Application {
 
     private static MyApplication INSTANCE;
-    private static int mPlayMode = 1;// 0 vitamio 1 ijkplayer
+    private static int mPlayMode = 1;// 0 vitamio 1 ijkplayer 2 webview
     private static String mToken;
     private static String mAccessToken;
     private static String mHostUrl1 = "http://api.hclyz.cn:81/mf/json.txt";
     private static String mHostUrl2 = "http://api.hclyz.cn:81/mf/";
+
+    public String getHostUrl3() {
+        return mHostUrl3;
+    }
+
+    public void setHostUrl3(String mHostUrl3) {
+        MyApplication.mHostUrl3 = mHostUrl3;
+    }
+
+    private static String mHostUrl3 = "http://www.df69e.cn/";
     public String getHostUrl1() {
         return mHostUrl1;
     }

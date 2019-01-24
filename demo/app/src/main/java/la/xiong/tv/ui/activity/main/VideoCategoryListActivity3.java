@@ -68,6 +68,8 @@ public class VideoCategoryListActivity3 extends BaseTActivity {
             mType = 4;
         }if (name != null && name.equals("nba")){
             mType = 5;
+        }if (name != null && name.equals("Moon")){
+            mType = 6;
         }
         mCategoryRv.setLayoutManager(layoutManager);
         videoTypeList = new ArrayList<>();
@@ -112,7 +114,7 @@ public class VideoCategoryListActivity3 extends BaseTActivity {
             }
             OkHttpClient okHttpClient = new OkHttpClient();
             final Request request = new Request.Builder()
-                    .url("http://www.2l3371.cn/mobile/user/login")
+                    .url(MyApplication.getInstance().getHostUrl3() +"mobile/user/login")
                     .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString()))//默认就是GET请求，可以不写
                     .build();
             Call call = okHttpClient.newCall(request);
@@ -190,6 +192,18 @@ public class VideoCategoryListActivity3 extends BaseTActivity {
                 }
             });
 
+        }else if (mType == 6){
+            String json = "{\"code\":0,\"msg\":\"成功\",\"data\":[{\"id\":-1,\"title\":\"推荐\",\"sort\":0},{\"id\":15,\"title\":\"item1\",\"sort\":1},{\"id\":21,\"title\":\"item2\",\"sort\":2},{\"id\":20,\"title\":\"item3\",\"sort\":3},{\"id\":17,\"title\":\"item4\",\"sort\":4},{\"id\":13,\"title\":\"item5\",\"sort\":5},{\"id\":11,\"title\":\"item6\",\"sort\":6},{\"id\":33,\"title\":\"item7\",\"sort\":6},{\"id\":10,\"title\":\"item8\",\"sort\":7},{\"id\":14,\"title\":\"item9\",\"sort\":8},{\"id\":12,\"title\":\"item10\",\"sort\":9},{\"id\":25,\"title\":\"item11\",\"sort\":10},{\"id\":23,\"title\":\"item12\",\"sort\":11},{\"id\":32,\"title\":\"item13\",\"sort\":12},{\"id\":31,\"title\":\"item14\",\"sort\":13},{\"id\":22,\"title\":\"item15\",\"sort\":14},{\"id\":24,\"title\":\"item16\",\"sort\":15},{\"id\":26,\"title\":\"item17\",\"sort\":16},{\"id\":27,\"title\":\"item18\",\"sort\":17},{\"id\":28,\"title\":\"item19\",\"sort\":18},{\"id\":1,\"title\":\"item20\",\"sort\":19},{\"id\":4,\"title\":\"item21\",\"sort\":20},{\"id\":2,\"title\":\"item22\",\"sort\":21},{\"id\":3,\"title\":\"item23\",\"sort\":22},{\"id\":18,\"title\":\"item24\",\"sort\":23},{\"id\":5,\"title\":\"原创动漫\",\"sort\":24},{\"id\":29,\"title\":\"中文动漫\",\"sort\":25}]}";
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                JSONArray list = jsonObject.getJSONArray("data");
+                final List<VideoType> playlList = new Gson().fromJson(list.toString(), new TypeToken<List<VideoType>>() {
+                }.getType());
+                videoTypeList.addAll(playlList);
+                mAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
 //        OkHttpClient okHttpClient = new OkHttpClient();

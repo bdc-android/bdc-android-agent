@@ -43,6 +43,7 @@ public class VideoListActivity extends BaseTActivity {
     String mToken = "";
     int mType;
     int page = 1;
+    int id;
     Bundle bundle;
 
     //private VideoListAdapter mAdapter;
@@ -65,6 +66,7 @@ public class VideoListActivity extends BaseTActivity {
         url = bundle.getString("url");
         mToken = bundle.getString("token");
         mType = bundle.getInt("type");
+        id = bundle.getInt("id");
 
         videoTypeList = new ArrayList<>();
 
@@ -230,6 +232,51 @@ public class VideoListActivity extends BaseTActivity {
                                 }else {
                                     mAdapter.addAll(playlList);
                                     if (playlList.size() < 15){
+                                        mRecyclerView.showNoMore();
+                                    }
+                                }
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }else if (mType == 6) {
+            Log.d(TAG, "page: " + page);
+
+            final Request request = new Request.Builder()
+                    .url("http://login.lure918.xyz/mobile/video/index?cate_id=" + id + "&page=" + page + "&limit=10")
+                    .get()
+                    .build();
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d(TAG, "onFailure: ");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = response.body().string();
+                    Log.d(TAG, "onResponse: " + result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        JSONObject dataObject = jsonObject.getJSONObject("data");
+                        JSONArray list = dataObject.getJSONArray("lists");
+                        final List<VideoModel> playlList = new Gson().fromJson(list.toString(), new TypeToken<List<VideoModel>>() {
+                        }.getType());
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (isRefresh){
+                                    mRecyclerView.dismissSwipeRefresh();
+                                    mAdapter.clear();
+                                    mAdapter.addAll(playlList);
+                                }else {
+                                    mAdapter.addAll(playlList);
+                                    if (playlList.size() < 10){
                                         mRecyclerView.showNoMore();
                                     }
                                 }
